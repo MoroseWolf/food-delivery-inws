@@ -12,7 +12,7 @@ public class Address {
     private Long id;
 
     @Column(name = "street", nullable = false)
-    private Long street;
+    private String street;
 
     @Column(name = "city", nullable = false)
     private String city;
@@ -41,7 +41,7 @@ public class Address {
         this.user = user;
     }
 
-    public Address(Long street, String city, String zip, String state, String country, Long userId) {
+    public Address(String street, String city, String zip, String state, String country, Long userId) {
         this.street = street;
         this.city = city;
         this.zip = zip;
@@ -62,11 +62,11 @@ public class Address {
         this.id = id;
     }
 
-    public Long getStreet() {
+    public String getStreet() {
         return street;
     }
 
-    public void setStreet(Long street) {
+    public void setStreet(String street) {
         this.street = street;
     }
 
