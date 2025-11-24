@@ -2,7 +2,6 @@ package by.morwo.userservice.model;
 
 import jakarta.persistence.*;
 
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +13,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name",  nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "roles")

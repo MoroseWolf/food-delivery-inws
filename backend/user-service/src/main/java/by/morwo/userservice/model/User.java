@@ -1,14 +1,17 @@
 package by.morwo.userservice.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "id")
@@ -18,10 +21,10 @@ public class User {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password_hash",  nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -31,7 +34,9 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Address> addresses;
+    @Getter
+    @Setter
+    private List<Address> addresses = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -39,11 +44,14 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @Getter
+    @Setter
     private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -96,6 +104,16 @@ public class User {
     public void removeRole(Role role) {
         roles.remove(role);
         role.getUsers().remove(this);
+    }
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setUser(this);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setUser(null);
     }
 
 }
