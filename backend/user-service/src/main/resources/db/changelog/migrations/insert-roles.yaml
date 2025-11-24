@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-roles.yaml
+      author: morosewolf
+      changes:
+        - insert:
+            tableName: ROLE
+            columns:
+              - column:
+                  name: name
+                  value: ADMIN
+        - insert:
+            tableName: ROLE
+            columns:
+              - column:
+                  name: name
+                  value: USER
+      rollback:
+        - delete:
+            tableName: ROLE
+            where: name IN ('ADMIN', 'USER')
