@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-dish-table.yaml
+      author: morosewolf
+      changes:
+        - createTable:
+            tableName: dish
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: price
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image_url
+                  type: VARCHAR
+        - addForeignKeyConstraint:
+            baseTableName: dish
+            baseColumnNames: restaurant_id
+            referencedTableName: restaurant
+            referencedColumnNames: id
+            constraintName: fk_dish_restaurant
+            onDelete: CASCADE
